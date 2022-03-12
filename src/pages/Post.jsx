@@ -4,10 +4,18 @@ import { Button } from "@vechaiui/react";
 
 import { memo, useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import Author from "../components/Post/Author";
+
+import moment from "moment";
+
 
 const Post = memo(({ }) => {
 
-    const [post, setPost] = useState(false)
+    const [post, setPost] = useState(null)
+    const [comments, setComments] = useState(null)
+
+    const [writingComment, setWritingComment] = useState("")
+    const [writingUser, setWritingUser] = useState("")
 
     const params = useParams();
 
@@ -15,6 +23,14 @@ const Post = memo(({ }) => {
         axios.get(`posts/${params.postId}`)
             .then(res => {
                 setPost(res.data)
+            })
+    }, [params.postId])
+
+    useEffect(() => {
+        // https://fswd-wp.devnss.com/wp-json/wp/v2/comments?post=${postId}
+        axios.get(`comments?post=${params.postId}`)
+            .then(res => {
+                setComments(res.data)
             })
     }, [params.postId])
 
@@ -31,20 +47,60 @@ const Post = memo(({ }) => {
                     {parse(post.content.rendered)}
                 </div>
 
+                <Author authorId={post.author} />
+
                 <div className="text-center">
                     <a href="/">
                         <Button variant="solid" color="primary" size="xl" className="my-3">Back</Button>
                     </a>
                 </div>
 
+
                 <div>
                     <p className="text-xl py-4">
                         Comment
                     </p>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  type="text" placeholder="Write here ..." />
-                    <Button variant="solid" color="primary" size="xs" className="my-3">Submit</Button>
-                </div>
+                    <input 
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                        type="text" placeholder="Name ..."
+                        onChange={(e) => setWritingUser(e.target.value)}
+                    />
+
+                    <input 
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                        type="text" placeholder="Write here ..."
+                        onChange={(e) => setWritingComment(e.target.value)}
+                    />
+                    
+                    <Button variant="solid" color="primary" size="xs" className="my-3" onClick={() => {
+                        axios.post('https://fswd-wp.devnss.com/wp-json/wp/v2/comments', {
+                            "post": post.id,
+                            "author_name": writingUser,
+                            "date": moment(),
+                            "content": writingComment,
+                        })
+                        .then(() => {
+                            axios.get(`comments?post=${params.postId}`)
+                            .then(res => {
+                                setComments(res.data)
+                            })
+                        })
+                        // .then(res => )
+                    }}>
+                        Submit
+                    </Button>
+                    
+                    {comments?.map((comment) => <>
+                    
+                        {comment.author_name} : {parse(comment.content?.rendered) }<br/>
+
+                    </>
+                    )}
+                    
             </div>
+        </div>
+
+    
 
         </>
 
@@ -54,8 +110,8 @@ const Post = memo(({ }) => {
                 Loading ....
             </div>
 
-            {/* <button type="button" class="bg-indigo-500 ..." disabled>
-                <svg class="motion-reduce:hidden animate-spin ..." viewBox="0 0 24 24"><!-- ... --></svg>
+            {/* <button type="button" className="bg-indigo-500 ..." disabled>
+                <svg className="motion-reduce:hidden animate-spin ..." viewBox="0 0 24 24"><!-- ... --></svg>
                 Loading ....
             </button> */}
         </>
