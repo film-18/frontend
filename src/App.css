@@ -4,6 +4,13 @@
 
 
 * {
-    font-family: 'Ubuntu Condensed', sans-serif;
+    /* font-family: 'Ubuntu Condensed', sans-serif; */
+    font-family: 'Balsamiq Sans', cursive;
     word-spacing: 3px;
+    /* background-color: #e5e7eb; */
+}
+
+html {
+    background-color: #9CA3AF;
+    ;
 }

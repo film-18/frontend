@@ -1,29 +1,35 @@
-import { memo, useEffect, useContext, useState, useCallback, useMemo } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
-import { Button } from "@vechaiui/react";
-import moment from "moment";
 import parse from 'html-react-parser';
+import { Button } from "@vechaiui/react";
+
+import { memo, useEffect, useMemo, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+
+
+import Categoryy from "../components/Post/Category";
+import { Avatar } from "@vechaiui/react";
 
 import Author from "../components/Post/Author";
-import Category from "../components/Post/Category";
-import { Avatar } from "@vechaiui/react"
-import tag from "@vechaiui/core/src/components/tag";
 import Tags from "../components/Post/Tag";
+import moment from "moment";
 
-
-export const Home = memo(() => {
-
-    const [posts, setPosts] = useState([])
+const AuthorId = memo(({ }) => {
+    const [author, setAuthor] = useState(null)
+    const [post, setPost] = useState(null)
     const [comments, setComments] = useState([])
 
-
     const params = useParams();
+    useEffect(() => {
+        axios.get(`users/${params.authorId}`)
+            .then(res => {
+                setAuthor(res.data)
+            })
+    }, [params.authorId])
 
     useEffect(() => {
-        axios.get('posts')
+        axios.get(`posts`)
             .then(res => {
-                setPosts(res.data)
+                setPost(res.data)
             })
     }, [])
 
@@ -36,15 +42,30 @@ export const Home = memo(() => {
     }, [])
 
 
+    if (author)
+        return <>
+            <div className="px-8 py-8 flex justify-center hover:scale-105 duration-200 ">
+                <a href="#" class="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                    <img class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={author.avatar_urls['96']} alt="" />
+                    <div class="flex flex-col justify-between p-4 leading-normal">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{author.name}</h5>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{author.description}
+                            <br />
+                            {parse(author.link)}
+                            <br />
+                            Post Item : {post?.filter(post => post.author === author.id).length}
+                        </p>
+                    </div>
+                </a>
+            </div>
 
-    return <>
-        <div className="px-8 py-8">
 
-            <div className="grid grid-cols-2 gap-8">
 
-                {posts?.map(e =>
-                    <>
 
+            <div className="grid grid-cols-2 gap-8 px-8 py-8">
+
+                {post?.map(e => {
+                    if (e.author === author.id) return <>
                         <div className="p-6 bg-white rounded-lg border border-gray-200 shadow-md hover:scale-105 duration-500 hover:bg-white-500">
 
                             {/* <a href="#"> */}
@@ -60,32 +81,23 @@ export const Home = memo(() => {
                             </span>
                             <p className="text-xs inline-flex text-green-800">{e.status}</p>
 
+
                             <br />
                             <div className="pt-2">
                                 {e.categories?.map(category => {
-                                    return <Category categoryId={category} />
+                                    return <Categoryy categoryId={category} />
                                 })}
-                                
+
                                 {e.tags?.map(tagId => {
                                     return <Tags tagId={tagId} />
                                 })}
                             </div>
-
-
 
                             {/* </a> */}
                             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 py-2">
                                 {/* {e.excerpt?.rendered?.length > 50 ? e.excerpt?.rendered.slice(3, 20) + "..." : e.excerpt?.rendered} */}
                                 {parse(e.excerpt?.rendered)}
                             </p>
-
-                            {/* <div>
-
-                                {comments?.filter(comment => comment.post === e.id).length}
-                            </div> */}
-
-
-
                             <div className="flex justify-between">
                                 <div>
                                     <Link to={`/posts/${e.id}`}>
@@ -107,21 +119,39 @@ export const Home = memo(() => {
 
                                         {/* <p>+ {comments?.filter(comment => comment.post === e.id).length} others </p> */}
                                     </div>
+
                                 </div>
-
-
                             </div>
-
-
-
                         </div>
-
                     </>
-                )}
+                })}
             </div>
-        </div>
+
+            <div className="flex justify-center py-2">
+                <Link to={`/Author`}>
+                    <a href="#" className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 duration-300 focus:ring-4 focus:ring-blue-300 hover:scale-105">
+                        Back
+                    </a>
+                </Link>
+            </div>
 
 
-    </>
 
-});
+
+        </>
+
+    else
+        return <>
+            <div className="text-center text-xl px-20 py-60">
+                Loading ....
+            </div>
+
+            {/* <button type="button" className="bg-indigo-500 ..." disabled>
+        <svg className="motion-reduce:hidden animate-spin ..." viewBox="0 0 24 24"><!-- ... --></svg>
+        Loading ....
+    </button> */}
+        </>
+
+})
+
+export default AuthorId;
