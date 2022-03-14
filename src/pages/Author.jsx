@@ -1,6 +1,6 @@
-import { memo, useEffect, useContext, useState, useCallback, useMemo } from "react";
+import { memo, useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Spinner } from "@vechaiui/react";
 
 export const Author = memo(() => {
@@ -8,9 +8,7 @@ export const Author = memo(() => {
     const [authors, setAuthors] = useState(null)
     const [posts, setPosts] = useState([])
     const [categorys, setCategory] = useState([])
-
-    const [count, setCount] = useState(0)
-
+    
     useEffect(() => {
         axios.get('posts')
             .then(res => {
@@ -72,11 +70,11 @@ export const Author = memo(() => {
                                 {/* <hr className="h-10 bg-blue-900" /> */}
                                 <div className="pb-2">
                                     <Link to={`/author/${author.id}`}>
-                                        <a href="#">
-                                            <span className="text-white-800 text-m font-medium mr-2 px-2.5 py-0.5  dark:bg-blue-200 dark:text-blue-800">
-                                                {posts?.filter(post => post.author === author.id).length} Posts
-                                            </span>
-                                        </a>
+                    
+                                        <span className="text-white-800 text-m font-medium mr-2 px-2.5 py-0.5  dark:bg-blue-200 dark:text-blue-800">
+                                            {posts?.filter(post => post.author === author.id).length} Posts
+                                        </span>
+                            
                                     </Link>
                                 </div>
 
@@ -86,6 +84,7 @@ export const Author = memo(() => {
                                         return [...post.categories?.map(
                                             categoriesId => categorys?.map(category => {
                                                 if (categoriesId === category.id) return category.name;
+                                                return undefined;
                                             }).filter(e => e != null)[0]
                                         )]
                                     }).flat()
