@@ -1,6 +1,7 @@
 import axios from "axios";
 import { memo, useEffect, useState } from "react";
 import { Button } from "@vechaiui/react";
+import { Link, useParams } from "react-router-dom";
 
 const Categorys = memo(({ categoryId }) => {
 
@@ -18,14 +19,16 @@ const Categorys = memo(({ categoryId }) => {
 
     if (!category)
         return <>
-            
+
         </>
 
     // if(showOnlyName)
     //     return author.name
 
     return <>
-        <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">{category.name}</span>
+        <Link to={`/category/${category.id}`}>
+            <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">{category.name}</span>
+        </Link>
     </>
 })
 

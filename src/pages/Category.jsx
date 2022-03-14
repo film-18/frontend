@@ -19,13 +19,25 @@ export const Category = memo(() => {
     const [selectedCategory, setSelectedCategory] = useState(null)
     const [comments, setComments] = useState([])
 
+    const params = useParams()
+
+    useEffect(() => {
+        setSelectedCategory(params.categoryId)
+    }, [params.categoryId])
+
     useEffect(() => {
         axios.get('categories')
             .then(res => {
                 setCategories(res.data)
-                setSelectedCategory(res.data?.[0]?.id)
+                // setSelectedCategory(res.data?.[0]?.id)
             })
     }, [])
+
+    useEffect(() => {
+        if(categories && !params.categoryId && !selectedCategory) {
+            setSelectedCategory(categories[0]?.id)
+        }
+    }, [categories, selectedCategory, params.categoryId])
 
 
     useEffect(() => {
@@ -58,10 +70,12 @@ export const Category = memo(() => {
                 <div class="border-b border-gray-400 dark:border-gray-900">
                     <ul class="flex flex-wrap -mb-px">
                         <li class="mr-2">
-                            <a href="#" class="inline-block py-4 px-4 font-medium text-2xl text-center text-gray-200 rounded-t-lg border-b-2 border-transparent hover:text-blue-700 hover:border-blue-700 dark:text-gray-400 dark:hover:text-gray-300"
-                            onClick={() => {
-                                setSelectedCategory(category.id)
-                            }}>{category.name}</a>
+                            <Link
+                                to={`/category/${category.id}`}
+                                class={`inline-block py-4 px-4 font-medium text-2xl text-center rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-grau-600 ${category.id === parseInt(selectedCategory) ? 'text-blue-700 border-blue-700' : 'text-gray-500'} dark:text-gray-400 dark:hover:text-gray-300`}
+                            >
+                                {category.name}
+                            </Link>
                         </li>
                     </ul>
                 </div>

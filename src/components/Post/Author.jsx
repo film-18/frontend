@@ -2,6 +2,7 @@ import axios from "axios";
 import { memo, useEffect, useState } from "react";
 import parse from 'html-react-parser';
 import { Link, useParams } from "react-router-dom";
+import { Spinner } from "@vechaiui/react";
 
 const Author = memo(({ authorId, showOnlyName = false }) => {
 
@@ -18,10 +19,15 @@ const Author = memo(({ authorId, showOnlyName = false }) => {
             })
     }, [authorId])
 
-    if (!author)
+    if (!author) {
+        if (showOnlyName)
+            return <Spinner size="sm" />
         return <>
-            Loading...
+            <div className="flex w-full p-8 justify-center">
+                <Spinner size="xl" className="my-auto" />
+            </div>
         </>
+    }
 
     if (showOnlyName)
         return author.name

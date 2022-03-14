@@ -7,6 +7,7 @@ import { Avatar } from "@vechaiui/react"
 import moment from "moment";
 import parse from 'html-react-parser';
 import Author from "../components/Post/Author";
+import { Spinner } from "@vechaiui/react";
 
 
 export const Tag = memo(() => {
@@ -45,11 +46,21 @@ export const Tag = memo(() => {
 
     if (!tag)
         return <>
-
+            <div className="flex w-full h-screen p-8 justify-center">
+                <Spinner size="xl" className="my-auto" />
+            </div>
         </>
 
     return <>
+
+
         <div className="px-8 py-8">
+
+            <div className="mt-6 mb-6 text-4xl bg-yellow-100 rounded-lg px-8 py-8 h-24 w-1/2 mx-auto">
+                <h1 className="text-yellow-800 text-center">
+                    Tag : {tag.slug}
+                </h1>
+            </div>
 
             <div className="grid grid-cols-2 gap-8">
 

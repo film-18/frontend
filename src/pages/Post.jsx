@@ -5,6 +5,7 @@ import { Button } from "@vechaiui/react";
 import { memo, useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Author from "../components/Post/Author";
+import { Spinner } from "@vechaiui/react";
 
 import moment from "moment";
 
@@ -16,7 +17,7 @@ const Post = memo(({ }) => {
 
 
     const [writingComment, setWritingComment] = useState("")
-    const [writingUser, setWritingUser] = useState("")
+    const [writingUser, setWritingUser] = useState(localStorage.getItem('comment_name') || '')
 
     const params = useParams();
 
@@ -29,23 +30,21 @@ const Post = memo(({ }) => {
 
     useEffect(() => {
         // https://fswd-wp.devnss.com/wp-json/wp/v2/comments?post=${postId}
-        axios.get(`comments?post=${params.postId}`)
+        axios.get(`comments?post=${params.postId}&orderby=date`)
             .then(res => {
                 setComments(res.data)
             })
     }, [params.postId])
 
-
-
     if (post)
         return <>
 
             <div className="px-8 py-8">
-                <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">
-                    {post.title?.rendered}
-                </div>
 
-                <div className="px-8 py-8 text-xl">
+                <div className="px-8 py-8 container mx-auto bg-gray-50 rounded-lg">
+                    <div className="text-4xl p-5 font-bold tracking-tight text-gray-900 dark:text-white text-center">
+                        {post.title?.rendered}
+                    </div>
                     {parse(post.content.rendered)}
                 </div>
 
@@ -63,9 +62,10 @@ const Post = memo(({ }) => {
                 <div>
                     <div className="max-w-m bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 mx-auto">
                         <div className="px-8 py-5">
-          
-                            <label for="text" className="block mb-2 text-m font-medium text-gray-900 dark:text-gray-300 ">Your name</label>
-                            <input type="text" id="email"
+
+                            <label for="name" className="block mb-2 text-m font-medium text-gray-900 dark:text-gray-300 ">Your name</label>
+                            <input type="text" id="name"
+                                value={writingUser}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="name..." required
                                 onChange={(e) => setWritingUser(e.target.value)} />
@@ -96,9 +96,11 @@ const Post = memo(({ }) => {
                                     "content": writingComment,
                                 })
                                     .then(() => {
-                                        axios.get(`comments?post=${params.postId}`)
+                                        axios.get(`comments?post=${params.postId}&orderby=date`)
                                             .then(res => {
                                                 setComments(res.data)
+                                                document.getElementById('message').value = ''
+                                                localStorage.setItem('comment_name', writingUser)
                                             })
                                     })
                                 // .then(res => )
@@ -144,14 +146,9 @@ const Post = memo(({ }) => {
 
     else
         return <>
-            <div className="text-center text-xl px-20 py-60">
-                Loading ....
+            <div className="flex w-full h-screen p-8 justify-center">
+                <Spinner size="xl" className="my-auto" />
             </div>
-
-            {/* <button type="button" className="bg-indigo-500 ..." disabled>
-                <svg className="motion-reduce:hidden animate-spin ..." viewBox="0 0 24 24"><!-- ... --></svg>
-                Loading ....
-            </button> */}
         </>
 })
 

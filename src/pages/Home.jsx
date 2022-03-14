@@ -10,22 +10,26 @@ import Category from "../components/Post/Category";
 import { Avatar } from "@vechaiui/react"
 import tag from "@vechaiui/core/src/components/tag";
 import Tags from "../components/Post/Tag";
-
+import { Radio } from "@vechaiui/react"
+import { Spinner } from "@vechaiui/react";
 
 export const Home = memo(() => {
 
-    const [posts, setPosts] = useState([])
+    const [posts, setPosts] = useState(null)
     const [comments, setComments] = useState([])
+
+    const [sortBy, setSortBy] = useState('date')
+    const [search, setSearch] = useState('')
 
 
     const params = useParams();
 
     useEffect(() => {
-        axios.get('posts')
+        axios.get(`posts?per_page=100&orderby=${sortBy}&search=${search}`)
             .then(res => {
                 setPosts(res.data)
             })
-    }, [])
+    }, [sortBy, search])
 
     useEffect(() => {
         // https://fswd-wp.devnss.com/wp-json/wp/v2/comments?post=${postId}
@@ -38,9 +42,60 @@ export const Home = memo(() => {
 
 
     return <>
+
+
+        <div className="flex flex-wrap w-full pt-8 pb-4 px-8 space-x-4 justify-between">
+            <div className="pt-3">
+                Sort by : 
+                <Radio.Group
+                    defaultValue="date"
+                    className="space-x-4"
+                    inline
+                    size="xl"
+                    onChange={(e) => {
+                        console.log(e.target.value)
+                        setSortBy(e.target.value)
+                        // axios.get('posts?per_page=100&orderby=' + e.target.value)
+                        //     .then(res => {
+                        //         setPosts(res.data)
+                        //     })
+                    }}
+                >
+                    <Radio value="date">Date</Radio>
+                    <Radio value="author">Author</Radio>
+                    <Radio value="title">Title</Radio>
+                </Radio.Group>
+            </div>
+            <div className="mt-auto">
+                <div class="relative mt-1 pl-3">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-7 pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                    </div>
+                    <input
+                        type="text"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search for items"
+                        onChange={(e) => {
+                            console.log(e.target.value)
+                            setSearch(e.target.value)
+                        }}
+                    />
+                </div>
+            </div>
+
+        </div>
+
+
+        {!posts && <>
+
+            <div className="flex w-full h-screen p-8 justify-center">
+                <Spinner size="xl" className="my-auto" />
+            </div>
+        </>}
         <div className="px-8 py-8">
 
             <div className="grid grid-cols-2 gap-8">
+
 
                 {posts?.map(e =>
                     <>
@@ -61,11 +116,11 @@ export const Home = memo(() => {
                             <p className="text-xs inline-flex text-green-800">{e.status}</p>
 
                             <br />
-                            <div className="pt-2">
+                            <div className="pt-2 flex flex-wrap">
                                 {e.categories?.map(category => {
                                     return <Category categoryId={category} />
                                 })}
-                                
+
                                 {e.tags?.map(tagId => {
                                     return <Tags tagId={tagId} />
                                 })}

@@ -11,6 +11,7 @@ import AuthorId from './pages/AuthorId';
 import Tag from './pages/Tag';
 import Layout from './components/Layout';
 import {VechaiProvider} from "@vechaiui/react";
+import AboutMe from './pages/AboutMe';
 
 import axios from 'axios';
 
@@ -32,7 +33,7 @@ function App() {
             <Route path="author" element={<Author />} />
             <Route path="author/:authorId" element={<AuthorId />} />
             <Route path="tag/:tagSlug" element={<Tag />} />
-            {/* <Route path="tag/:tagId" element={<Tag />} /> */}
+            <Route path="aboutme/" element={<AboutMe />} />
             {/* <Route path="comment" element={<Comment />} /> */}
         </Route>
         </Routes>

@@ -8,6 +8,7 @@ import { Link, useParams } from "react-router-dom";
 
 import Categoryy from "../components/Post/Category";
 import { Avatar } from "@vechaiui/react";
+import { Spinner } from "@vechaiui/react";
 
 import Author from "../components/Post/Author";
 import Tags from "../components/Post/Tag";
@@ -53,7 +54,7 @@ const AuthorId = memo(({ }) => {
                             <br />
                             {parse(author.link)}
                             <br />
-                            Post Item : {post?.filter(post => post.author === author.id).length}
+                            {post?.filter(post => post.author === author.id).length} posts
                         </p>
                     </div>
                 </a>
@@ -142,14 +143,9 @@ const AuthorId = memo(({ }) => {
 
     else
         return <>
-            <div className="text-center text-xl px-20 py-60">
-                Loading ....
+            <div className="flex w-full h-screen p-8 justify-center">
+                <Spinner size="xl" className="my-auto" />
             </div>
-
-            {/* <button type="button" className="bg-indigo-500 ..." disabled>
-        <svg className="motion-reduce:hidden animate-spin ..." viewBox="0 0 24 24"><!-- ... --></svg>
-        Loading ....
-    </button> */}
         </>
 
 })

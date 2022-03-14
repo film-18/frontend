@@ -1,10 +1,11 @@
 import { memo, useEffect, useContext, useState, useCallback, useMemo } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import { Spinner } from "@vechaiui/react";
 
 export const Author = memo(() => {
 
-    const [authors, setAuthors] = useState([])
+    const [authors, setAuthors] = useState(null)
     const [posts, setPosts] = useState([])
     const [categorys, setCategory] = useState([])
 
@@ -42,7 +43,20 @@ export const Author = memo(() => {
         {/* <p className="text-center text-xl my-10">
             Author
         </p> */}
-        <div className="flex justify-center gap-2 py-10">
+        {!authors && <>
+            <div className="flex w-full h-screen p-8 justify-center">
+                <Spinner size="xl" className="my-auto" />
+            </div>
+        </>}
+        <div className="mt-12 mb-6 text-4xl bg-blue-800 rounded-lg px-8 py-8 h-24 w-1/2 mx-auto">
+            <h1 className="text-gray-200 text-center">
+                Author
+            </h1>
+        </div>
+
+
+        <div className="flex justify-center gap-2">
+
 
 
             {authors?.map(author =>
@@ -51,7 +65,7 @@ export const Author = memo(() => {
                     <div className="py-5 mx-2 w-full md:w-1/3 bg-white rounded-lg border border-gray-200 shadow-md mx-auto hover:scale-105 duration-500">
                         <Link to={`/author/${author.id}`}>
                             <div className="flex flex-col items-center py-4">
-                                <img className="my-3 w-60 h-60 rounded-full shadow-lg" src={author.avatar_urls['96']} alt="img" />
+                                <img className="my-3 w-40 h-40 rounded-full shadow-lg" src={author.avatar_urls['96']} alt="img" />
                                 <h5 className="mb-1 mt-2 text-2xl font-medium text-gray-900 dark:text-white">{author.name}</h5>
                                 <span className="text-xl  text-gray-500 dark:text-gray-400 pb-2">{author.slug}</span>
 
@@ -60,28 +74,30 @@ export const Author = memo(() => {
                                     <Link to={`/author/${author.id}`}>
                                         <a href="#">
                                             <span className="text-white-800 text-m font-medium mr-2 px-2.5 py-0.5  dark:bg-blue-200 dark:text-blue-800">
-                                                Posts item : {posts?.filter(post => post.author === author.id).length}
+                                                {posts?.filter(post => post.author === author.id).length} Posts
                                             </span>
                                         </a>
                                     </Link>
                                 </div>
 
-
-                                {[...new Set(posts?.filter(post => post.author === author.id).map(post => {
-                                    return [...post.categories?.map(
-                                        categoriesId => categorys?.map(category => {
-                                            if (categoriesId === category.id) return category.name;
-                                        }).filter(e => e != null)[0]
-                                    )]
-                                }).flat()
-                                )].map(category => {
-                                    console.log(category);
-                                    return <div className="pb-1">
-                                        <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                                <div className="flex flex-wrap">
+                                        
+                                    {[...new Set(posts?.filter(post => post.author === author.id).map(post => {
+                                        return [...post.categories?.map(
+                                            categoriesId => categorys?.map(category => {
+                                                if (categoriesId === category.id) return category.name;
+                                            }).filter(e => e != null)[0]
+                                        )]
+                                    }).flat()
+                                    )].map(category => {
+                                        console.log(category);
+                                        return <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
                                             {category}
                                         </span>
-                                    </div>
-                                })}
+                                   
+                                    })}
+
+                                </div>
 
                                 {/* {categorys?.map(category =>
                             
