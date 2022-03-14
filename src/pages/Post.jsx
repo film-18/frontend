@@ -3,7 +3,7 @@ import parse from 'html-react-parser';
 import { Button } from "@vechaiui/react";
 
 import { memo, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Author from "../components/Post/Author";
 import { Spinner } from "@vechaiui/react";
 
