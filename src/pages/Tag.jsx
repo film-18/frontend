@@ -56,13 +56,13 @@ export const Tag = memo(() => {
 
         <div className="px-8 py-8">
 
-            <div className="mt-6 mb-6 text-4xl bg-yellow-100 rounded-lg px-8 py-8 h-24 w-1/2 mx-auto">
+            <div className="mt-6 mb-6 text-4xl bg-yellow-100 rounded-lg px-8 py-8 h-24 w-full md:w-1/2 mx-auto">
                 <h1 className="text-yellow-800 text-center">
                     Tag : #{tag.slug}
                 </h1>
             </div>
 
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
                 {posts?.map(e =>
                     <>
@@ -83,7 +83,7 @@ export const Tag = memo(() => {
                             <p className="text-xs inline-flex text-green-800">{e.status}</p>
 
                             <br />
-                            <div className="pt-2">
+                            <div className="pt-2 flex flex-wrap">
                                 {e.categories?.map(category => {
                                     return <Category categoryId={category} />
                                 })}

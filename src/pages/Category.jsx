@@ -62,7 +62,7 @@ export const Category = memo(() => {
 
     // if (posts.categories?.map() = categories.id) {
     return <>
-        <div className="flex justify-center my-5">
+        <div className="flex flex-wrap justify-center my-5">
 
             {categories?.map(category => <>
                 <div className="border-b border-gray-400 dark:border-gray-900">
@@ -82,7 +82,7 @@ export const Category = memo(() => {
 
 
 
-        <div className="grid grid-cols-2 gap-8 px-8 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-8 py-8">
 
             {posts?.map(e =>
                 <>
@@ -103,7 +103,7 @@ export const Category = memo(() => {
                         <p className="text-xs inline-flex text-green-800">{e.status}</p>
 
                         <br />
-                        <div className="pt-2">
+                        <div className="pt-2 flex flex-wrap">
                             {e.categories?.map(category => {
                                 return <Categoryy categoryId={category} />
                             })}

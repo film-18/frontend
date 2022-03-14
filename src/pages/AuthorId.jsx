@@ -62,7 +62,7 @@ const AuthorId = memo(() => {
 
 
 
-            <div className="grid grid-cols-2 gap-8 px-8 py-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-8 py-8">
 
                 {post?.map(e => {
                     if (e.author === author.id) return <>
@@ -83,7 +83,7 @@ const AuthorId = memo(() => {
 
 
                             <br />
-                            <div className="pt-2">
+                            <div className="pt-2 flex flex-wrap">
                                 {e.categories?.map(category => {
                                     return <Categoryy categoryId={category} />
                                 })}

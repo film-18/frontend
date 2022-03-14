@@ -53,7 +53,7 @@ export const Author = memo(() => {
         </div>
 
 
-        <div className="flex justify-center gap-2">
+        <div className="flex flex-wrap justify-center gap-2">
 
 
 

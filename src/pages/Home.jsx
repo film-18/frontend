@@ -92,7 +92,7 @@ export const Home = memo(() => {
         </>}
         <div className="px-8 py-8">
 
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
 
                 {posts?.map(e =>
