@@ -51,11 +51,19 @@ const Post = memo(() => {
                 <Author authorId={post.author} />
 
                 <div className="flex justify-center py-5">
-                    <Link to={`/`} className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 duration-300 focus:ring-4 focus:ring-blue-300 hover:scale-105">
+                    {/* <Link to={`/`} >
                 
                         Back
               
-                    </Link>
+                    </Link> */}
+                    <button
+                        className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 duration-300 focus:ring-4 focus:ring-blue-300 hover:scale-105"
+                        onClick={() => {
+                            window.history.back()
+                        }}
+                        >
+                        Back
+                    </button>
                 </div>
 
 

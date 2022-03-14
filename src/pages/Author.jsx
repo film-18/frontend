@@ -10,7 +10,7 @@ export const Author = memo(() => {
     const [categorys, setCategory] = useState([])
     
     useEffect(() => {
-        axios.get('posts')
+        axios.get('posts?per_page=100')
             .then(res => {
                 setPosts(res.data)
             })
@@ -46,8 +46,8 @@ export const Author = memo(() => {
                 <Spinner size="xl" className="my-auto" />
             </div>
         </>}
-        <div className="mt-12 mb-6 text-4xl bg-blue-800 rounded-lg px-8 py-8 h-24 w-1/2 mx-auto">
-            <h1 className="text-gray-200 text-center">
+        <div className="mt-12 mb-6 text-4xl bg-gray-600 rounded-lg px-8 py-8 h-24 w-1/2 mx-auto">
+            <h1 className="text-gray-100 text-center">
                 Author
             </h1>
         </div>
@@ -78,7 +78,7 @@ export const Author = memo(() => {
                                     </Link>
                                 </div>
 
-                                <div className="flex flex-wrap">
+                                <div className="flex flex-wrap px-8 py-5 justify-center">
                                         
                                     {[...new Set(posts?.filter(post => post.author === author.id).map(post => {
                                         return [...post.categories?.map(
@@ -90,7 +90,7 @@ export const Author = memo(() => {
                                     }).flat()
                                     )].map(category => {
                                         console.log(category);
-                                        return <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                                        return <span className="bg-green-100 mt-2 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
                                             {category}
                                         </span>
                                    

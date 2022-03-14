@@ -58,7 +58,7 @@ export const Tag = memo(() => {
 
             <div className="mt-6 mb-6 text-4xl bg-yellow-100 rounded-lg px-8 py-8 h-24 w-1/2 mx-auto">
                 <h1 className="text-yellow-800 text-center">
-                    Tag : {tag.slug}
+                    Tag : #{tag.slug}
                 </h1>
             </div>
 

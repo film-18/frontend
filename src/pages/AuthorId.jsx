@@ -27,7 +27,7 @@ const AuthorId = memo(() => {
     }, [params.authorId])
 
     useEffect(() => {
-        axios.get(`posts`)
+        axios.get(`posts?per_page=100`)
             .then(res => {
                 setPost(res.data)
             })
