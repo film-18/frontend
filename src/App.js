@@ -4,18 +4,18 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { Home } from './pages/Home';
-import { Posts } from './pages/Posts';
 import { Category } from './pages/Category';
 import { Author } from './pages/Author';
-import { Comment } from './pages/Comment';
 import Post from './pages/Post';
-
+import AuthorId from './pages/AuthorId';
+import Tag from './pages/Tag';
 import Layout from './components/Layout';
 import {VechaiProvider} from "@vechaiui/react";
 
 import axios from 'axios';
 
 axios.defaults.baseURL = 'https://fswd-wp.devnss.com/wp-json/wp/v2';
+axios.defaults.headers['Authorization'] = `Basic ${process.env.REACT_APP_AUTH_KEY}`
 
 
 function App() {
@@ -25,11 +25,15 @@ function App() {
         <Routes>
         <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="posts" element={<Posts />} />
             <Route path="posts/:postId" element={<Post />} />
-            <Route path="category" element={<Category />} />
+            {/* <Route path="posts/:postId/:authorId" element={<Post />} /> */}
+            <Route path="category/" element={<Category />} />
+            <Route path="category/:categoryId" element={<Category />} />
             <Route path="author" element={<Author />} />
-            <Route path="comment" element={<Comment />} />
+            <Route path="author/:authorId" element={<AuthorId />} />
+            <Route path="tag/:tagSlug" element={<Tag />} />
+            {/* <Route path="tag/:tagId" element={<Tag />} /> */}
+            {/* <Route path="comment" element={<Comment />} /> */}
         </Route>
         </Routes>
       </BrowserRouter>
