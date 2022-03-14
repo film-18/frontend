@@ -1,14 +1,12 @@
-import { memo, useEffect, useContext, useState, useCallback, useMemo } from "react";
+import { memo, useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
-import { Button } from "@vechaiui/react";
+import { Link } from "react-router-dom";
 import moment from "moment";
 import parse from 'html-react-parser';
 
 import Author from "../components/Post/Author";
 import Category from "../components/Post/Category";
 import { Avatar } from "@vechaiui/react"
-import tag from "@vechaiui/core/src/components/tag";
 import Tags from "../components/Post/Tag";
 import { Radio } from "@vechaiui/react"
 import { Spinner } from "@vechaiui/react";
@@ -22,7 +20,7 @@ export const Home = memo(() => {
     const [search, setSearch] = useState('')
 
 
-    const params = useParams();
+    // const params = useParams();
 
     useEffect(() => {
         axios.get(`posts?per_page=100&orderby=${sortBy}&search=${search}`)
@@ -143,12 +141,12 @@ export const Home = memo(() => {
 
                             <div className="flex justify-between">
                                 <div>
-                                    <Link to={`/posts/${e.id}`}>
-                                        <a href="#" className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 duration-300 focus:ring-4 focus:ring-blue-300 hover:scale-105">
-                                            Read more
-                                            <svg className="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                        </a>
+                                    <Link to={`/posts/${e.id}`} className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 duration-300 focus:ring-4 focus:ring-blue-300 hover:scale-105">
+                
+                                        Read more
+                                        <svg className="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    
                                     </Link>
                                 </div>
                                 <div>

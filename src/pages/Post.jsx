@@ -2,7 +2,7 @@ import axios from "axios";
 import parse from 'html-react-parser';
 import { Button } from "@vechaiui/react";
 
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Author from "../components/Post/Author";
 import { Spinner } from "@vechaiui/react";
@@ -10,7 +10,7 @@ import { Spinner } from "@vechaiui/react";
 import moment from "moment";
 
 
-const Post = memo(({ }) => {
+const Post = memo(() => {
 
     const [post, setPost] = useState(null)
     const [comments, setComments] = useState(null)
@@ -51,10 +51,10 @@ const Post = memo(({ }) => {
                 <Author authorId={post.author} />
 
                 <div className="flex justify-center py-5">
-                    <Link to={`/`}>
-                        <a href="#" className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 duration-300 focus:ring-4 focus:ring-blue-300 hover:scale-105">
-                            Back
-                        </a>
+                    <Link to={`/`} className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 duration-300 focus:ring-4 focus:ring-blue-300 hover:scale-105">
+                
+                        Back
+              
                     </Link>
                 </div>
 
@@ -120,7 +120,7 @@ const Post = memo(({ }) => {
                             {comments?.map((comment) => <>
                                 {/* {comment.author_name} : {parse(comment.content?.rendered)}<br /> */}
                                 <li>
-                                    <a href="#" className="block items-center p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <div className="block items-center p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
                                         <img className="mr-3 mb-3 w-12 h-12 rounded-full sm:mb-0" src={comment.author_avatar_urls['96']} alt="user img" />
                                         <div className="text-gray-600 dark:text-gray-400">
                                             <div className="text-base font-normal">
@@ -129,7 +129,7 @@ const Post = memo(({ }) => {
                                             </div>
                                             <div className="text-sm font-normal">{parse(comment.content?.rendered)}</div>
                                         </div>
-                                    </a>
+                                    </div>
                                 </li>
 
                             </>

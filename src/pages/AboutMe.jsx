@@ -1,16 +1,13 @@
-import { memo, useEffect, useContext, useState, useCallback, useMemo } from "react";
-import axios from "axios";
+import { memo } from "react";
 
 
 export const AboutMe = memo(() => {
     return <>
         <div className="py-8 px-8 flex justify-center">
             <div className="max-w-xl bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 pt-10">
-                <a href="#">
-                    <img src="https://avatars.githubusercontent.com/u/56312158?v=4" className="mb-3 w-60 h-60 rounded-full shadow-lg mx-auto" alt="" />
-                </a>
+                <img src="https://avatars.githubusercontent.com/u/56312158?v=4" className="mb-3 w-60 h-60 rounded-full shadow-lg mx-auto" alt="" />
                 <div className="p-5">
-                    <a href="#">
+                    <a href="https://github.com/film-18">
                         <h4
                             className="mb-2 text-2xl text-center font-bold tracking-tight text-gray-900 dark:text-white">
                             Kanlaya Pootsupha

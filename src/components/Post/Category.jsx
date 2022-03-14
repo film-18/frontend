@@ -1,7 +1,6 @@
 import axios from "axios";
 import { memo, useEffect, useState } from "react";
-import { Button } from "@vechaiui/react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Categorys = memo(({ categoryId }) => {
 

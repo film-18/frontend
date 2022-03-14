@@ -1,8 +1,7 @@
 import axios from "axios";
 import parse from 'html-react-parser';
-import { Button } from "@vechaiui/react";
 
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 
@@ -14,7 +13,7 @@ import Author from "../components/Post/Author";
 import Tags from "../components/Post/Tag";
 import moment from "moment";
 
-const AuthorId = memo(({ }) => {
+const AuthorId = memo(() => {
     const [author, setAuthor] = useState(null)
     const [post, setPost] = useState(null)
     const [comments, setComments] = useState([])
@@ -46,7 +45,7 @@ const AuthorId = memo(({ }) => {
     if (author)
         return <>
             <div className="px-8 py-8 flex justify-center hover:scale-105 duration-200 ">
-                <a href="#" class="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                <div class="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                     <img class="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={author.avatar_urls['96']} alt="" />
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{author.name}</h5>
@@ -57,7 +56,7 @@ const AuthorId = memo(({ }) => {
                             {post?.filter(post => post.author === author.id).length} posts
                         </p>
                     </div>
-                </a>
+                </div>
             </div>
 
 
@@ -101,12 +100,12 @@ const AuthorId = memo(({ }) => {
                             </p>
                             <div className="flex justify-between">
                                 <div>
-                                    <Link to={`/posts/${e.id}`}>
-                                        <a href="#" className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 duration-300 focus:ring-4 focus:ring-blue-300 hover:scale-105">
-                                            Read more
-                                            <svg className="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                        </a>
+                                    <Link to={`/posts/${e.id}`} className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 duration-300 focus:ring-4 focus:ring-blue-300 hover:scale-105">
+
+                                        Read more
+                                        <svg className="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                
                                     </Link>
                                 </div>
                                 <div>
@@ -125,14 +124,15 @@ const AuthorId = memo(({ }) => {
                             </div>
                         </div>
                     </>
+                    return undefined
                 })}
             </div>
 
             <div className="flex justify-center py-2">
-                <Link to={`/Author`}>
-                    <a href="#" className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 duration-300 focus:ring-4 focus:ring-blue-300 hover:scale-105">
-                        Back
-                    </a>
+                <Link to={`/Author`} className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 duration-300 focus:ring-4 focus:ring-blue-300 hover:scale-105">
+
+                    Back
+
                 </Link>
             </div>
 
