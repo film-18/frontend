@@ -30,7 +30,7 @@ const Post = memo(() => {
 
     useEffect(() => {
         // https://fswd-wp.devnss.com/wp-json/wp/v2/comments?post=${postId}
-        axios.get(`comments?post=${params.postId}&orderby=date`)
+        axios.get(`comments?post=${params.postId}&orderby=date&per_page=100`)
             .then(res => {
                 setComments(res.data)
             })
@@ -70,7 +70,7 @@ const Post = memo(() => {
                                 placeholder="name..." required
                                 onChange={(e) => setWritingUser(e.target.value)} />
 
-                            <label for="message" class="block mb-2 mt-2 text-m font-medium text-gray-900 dark:text-gray-400">Your message</label>
+                            <label for="message" className="block mb-2 mt-2 text-m font-medium text-gray-900 dark:text-gray-400">Your message</label>
                             <textarea id="message" rows="4"
                                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Add a comment..."
@@ -114,9 +114,10 @@ const Post = memo(() => {
                         <br />
 
                         <div className="mx-8 text-xl">
+                            {comments?.filter(comment => comment.post === post.id).length >= 100 ? 'latest ' : ''}
                             {comments?.filter(comment => comment.post === post.id).length} Comments
                         </div>
-                        <ol class="mt-3 mx-3 divide-y divider-gray-200 dark:divide-gray-700">
+                        <ol className="mt-3 mx-3 divide-y divider-gray-200 dark:divide-gray-700">
                             {comments?.map((comment) => <>
                                 {/* {comment.author_name} : {parse(comment.content?.rendered)}<br /> */}
                                 <li>

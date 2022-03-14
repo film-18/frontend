@@ -65,12 +65,12 @@ export const Category = memo(() => {
         <div className="flex justify-center my-5">
 
             {categories?.map(category => <>
-                <div class="border-b border-gray-400 dark:border-gray-900">
-                    <ul class="flex flex-wrap -mb-px">
-                        <li class="mr-2">
+                <div className="border-b border-gray-400 dark:border-gray-900">
+                    <ul className="flex flex-wrap -mb-px">
+                        <li className="mr-2">
                             <Link
                                 to={`/category/${category.id}`}
-                                class={`inline-block py-4 px-4 font-medium text-2xl text-center rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-grau-600 ${category.id === parseInt(selectedCategory) ? 'text-blue-700 border-blue-700' : 'text-gray-500'} dark:text-gray-400 dark:hover:text-gray-300`}
+                                className={`inline-block py-4 px-4 font-medium text-2xl text-center rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-grau-600 ${category.id === parseInt(selectedCategory) ? 'text-blue-700 border-blue-700' : 'text-gray-500'} dark:text-gray-400 dark:hover:text-gray-300`}
                             >
                                 {category.name}
                             </Link>
@@ -97,8 +97,8 @@ export const Category = memo(() => {
 
 
                         <span className="text-xs font-bold tracking-tight text-gray-500 dark:text-white">{moment(e.date).format("LLL")}</span>
-                        <span class="inline-flex items-center p-1 ml-3 mr-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full dark:bg-blue-200 dark:text-blue-800">
-                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        <span className="inline-flex items-center p-1 ml-3 mr-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full dark:bg-blue-200 dark:text-blue-800">
+                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
                         </span>
                         <p className="text-xs inline-flex text-green-800">{e.status}</p>
 
